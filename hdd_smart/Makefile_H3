@@ -1,0 +1,28 @@
+#H3
+TOOLCHAIN_PATH = /opt/toolchains/stbgcc-4.4.5-2.0
+CC = $(TOOLCHAIN_PATH)/bin/mips-linux-g++
+
+#CC = g++
+TARGET = main
+OBJECTS = main.o
+LIBS = -Llib 
+INCLUDES = -Iinclude 
+CFLAGS = $(LIBS) $(INCLUDES) -lm
+
+OUTPUT=hddsmart_test
+
+all: $(TARGET)
+	
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJECTS)
+	$(call after_build)
+
+main.o: main.cpp
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	rm $(OBJECTS)
+
+define after_build
+	@echo "make complete $(1)"
+endef
